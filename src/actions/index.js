@@ -15,8 +15,11 @@ export function cancelNewCard() {
 }
 
 export function createCard(props) {
-  return {
-    type: CREATE_CARD,
-    card: props
+  return (dispatch) => {
+    dispatch({
+      type: CREATE_CARD,
+      card: props
+    });
+    dispatch(cancelNewCard());
   };
 }
