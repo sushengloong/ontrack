@@ -10,6 +10,16 @@ const renderField = (field) => (
     {field.meta.touched && field.meta.error && <span className="error">{field.meta.error}</span>}
   </div>
 )
+const renderSelect = (field) => {
+  return (
+    <div className="input-row">
+      <select {...field.input} className="form-control">
+        {field.children}
+      </select>
+      {field.meta.touched && field.meta.error && <span className="error">{field.meta.error}</span>}
+    </div>
+  )
+}
 
 class CardNewForm extends Component {
   render() {
@@ -24,7 +34,14 @@ class CardNewForm extends Component {
 
         <div className="form-group">
           <label>Status</label>
-          <Field name="status" component={renderField} />
+          <Field name="status" component={renderSelect}>
+            <option value="">- Select status -</option>
+            <option value="Backlog">Backlog</option>
+            <option value="Developing">Developing</option>
+            <option value="Exploring">Exploring</option>
+            <option value="Deployed">Deployed</option>
+            <option value="Completed">Completed</option>
+          </Field>
         </div>
 
         <div className="form-group">
@@ -34,7 +51,12 @@ class CardNewForm extends Component {
 
         <div className="form-group">
           <label>Priority</label>
-          <Field name="priority" component={renderField} />
+          <Field name="priority" component={renderSelect} defaultValue="low">
+            <option value="">- Select priority -</option>
+            <option value="High">High</option>
+            <option value="Medium">Medium</option>
+            <option value="Low">Low</option>
+          </Field>
         </div>
 
         <Button type="submit" bsStyle="primary">Create</Button>
