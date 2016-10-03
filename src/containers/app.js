@@ -4,9 +4,13 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import CardTable from '../components/card_table';
 import CardNewButton from '../components/card_new_button';
-import { newCard, cancelNewCard } from '../actions';
+import { fetchCards, newCard, cancelNewCard } from '../actions';
 
 class App extends Component {
+  componentDidMount() {
+    this.props.fetchCards();
+  }
+
   render() {
     return (
       <div>
@@ -22,6 +26,6 @@ function mapStateToProps({ cards: { cards }, newCard: { showCardForm } }) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ newCard, cancelNewCard }, dispatch);
+  return bindActionCreators({ fetchCards, newCard, cancelNewCard }, dispatch);
 }
 export default connect(mapStateToProps, mapDispatchToProps)(App);

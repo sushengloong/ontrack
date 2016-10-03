@@ -1,7 +1,9 @@
-import { CREATE_CARD } from '../actions'
+import { FETCH_CARDS, CREATE_CARD } from '../actions'
 
 export default function(state = { cards: [] }, action) {
   switch (action.type) {
+    case FETCH_CARDS:
+      return { ...state, cards: action.cards };
     case CREATE_CARD:
       const { cards } = state;
       let card = action.card;

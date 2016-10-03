@@ -22,6 +22,18 @@ module.exports = {
   },
   devServer: {
     historyApiFallback: true,
-    contentBase: './'
+    contentBase: './',
+    proxy: {
+      '/api': {
+        target: {
+          host: "0.0.0.0",
+          protocol: 'http:',
+          port: 8000
+        },
+        pathRewrite: {
+          '^/api': ''
+        }
+      }
+    }
   }
 };
