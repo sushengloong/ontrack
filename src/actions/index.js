@@ -21,7 +21,7 @@ export function fetchCards() {
 export function newCard() {
   return {
     type: NEW_CARD
-  };
+  }
 }
 
 export function cancelNewCard() {
@@ -32,10 +32,20 @@ export function cancelNewCard() {
 
 export function createCard(props) {
   return (dispatch) => {
-    dispatch({
-      type: CREATE_CARD,
-      card: props
-    });
-    dispatch(cancelNewCard());
+    const data = new FormData();
+    data.append('title', props.title);
+    data.append('status', props.status);
+    data.append('priority', props.priority);
+    data.append('assignee', props.assignee);
+
+    axios.post('http://localhost:8080/api/cards', data)
+      .then((response) => {
+        dispatch({
+          type: CREATE_CARD,
+          card: props
+        });
+        dispatch(cancelNewCard());
+      })
+      .catch((error) => console.log(error));
   };
 }

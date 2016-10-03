@@ -5,7 +5,6 @@ export default function(state = { showCardForm: false }, action) {
     case NEW_CARD:
       return { ...state, showCardForm: true };
     case CANCEL_NEW_CARD:
-    case CREATE_CARD:
       return { ...state, showCardForm: false };
     default:
       return state;

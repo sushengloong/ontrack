@@ -22,9 +22,12 @@ type CardJsonData struct {
 	Cards []Card `json:"cards"`
 }
 
+var cards = []Card{ Card{Id: 1, Title: "Develop REST API in golang", Status: "In Progress", Priority: "High", Assignee: "SSL"} }
+
 func main() {
 	router := mux.NewRouter().StrictSlash(true)
 	router.HandleFunc("/cards", index).Methods("GET")
+	router.HandleFunc("/cards", create).Methods("POST")
 
 	server := &http.Server{
 		Handler:      router,
@@ -38,10 +41,6 @@ func main() {
 }
 
 func index(w http.ResponseWriter, r *http.Request) {
-	// vars := mux.Vars(r)
-	// log.Println(vars)
-
-	cards := []Card{ Card{Id: 1, Title: "Develop REST API in golang", Status: "In Progress", Priority: "High", Assignee: "SSL"} }
 	cardJsonData := CardJsonData{Cards: cards}
 
 	cardJson, err := json.Marshal(cardJsonData)
@@ -55,4 +54,19 @@ func index(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	fmt.Fprintln(w, string(cardJson));
+}
+
+func create(w http.ResponseWriter, r *http.Request) {
+	// r.ParseForm()
+	// b, _ := json.MarshalIndent(r.Form, "", "  ")
+
+	title := r.FormValue("title");
+	status := r.FormValue("status");
+	priority := r.FormValue("priority");
+	assignee := r.FormValue("assignee");
+	card := Card{Id: len(cards)+1, Title: title, Status: status, Priority: priority, Assignee: assignee}
+	cards = append(cards, card)
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
 }
