@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import { Field, reduxForm } from 'redux-form';
-import { createCard } from '../actions';
+import { saveCard } from '../actions';
 import { connect } from 'react-redux'; 
 
 const renderField = (field) => (
@@ -31,10 +31,10 @@ class CardForm extends Component {
   }
 
   renderForm() {
-    const { handleSubmit, createCard } = this.props;
+    const { handleSubmit, saveCard } = this.props;
 
     return (
-      <form onSubmit={handleSubmit(createCard)}>
+      <form onSubmit={handleSubmit(saveCard)}>
         <div className="form-group">
           <label>Title</label>
           <Field name="title" component={renderField} />
@@ -98,4 +98,4 @@ function mapStateToProps({ card: {card} }) {
   return { initialValues: card };
 }
 
-export default connect(mapStateToProps, { createCard })(CardForm);
+export default connect(mapStateToProps, { saveCard })(CardForm);

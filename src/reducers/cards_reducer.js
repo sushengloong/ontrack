@@ -1,4 +1,5 @@
-import { FETCH_CARDS, CREATE_CARD } from '../actions'
+import { FETCH_CARDS, CREATE_CARD, UPDATE_CARD } from '../actions'
+import _ from 'lodash';
 
 export default function(state = { cards: [] }, action) {
   switch (action.type) {
@@ -9,6 +10,7 @@ export default function(state = { cards: [] }, action) {
       let card = action.card;
       card.id = cards.length + 1;
       return { ...state, cards: [...cards, card] };
+    case UPDATE_CARD:
     default:
       return state;
   }
