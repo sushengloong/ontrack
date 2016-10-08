@@ -4,7 +4,7 @@ export default class CardTable extends Component {
   renderCardRow(card) {
     const id = card.id
     return (
-      <tr key={id}>
+      <tr key={id} onClick={() => this.props.editCard(card)}>
         <th scope="row">{id}</th>
         <td>{card.title}</td>
         <td>{card.status}</td>
@@ -27,7 +27,7 @@ export default class CardTable extends Component {
           </tr>
         </thead>
         <tbody>
-          {this.props.cards.map(this.renderCardRow)}
+          {this.props.cards.map(this.renderCardRow.bind(this))}
         </tbody>
       </table>
     );

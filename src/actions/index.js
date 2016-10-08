@@ -4,6 +4,7 @@ export const FETCH_CARDS = 'FETCH_CARDS';
 export const NEW_CARD = 'NEW_CARD';
 export const CANCEL_NEW_CARD = 'CANCEL_NEW_CARD';
 export const CREATE_CARD = 'CREATE_CARD';
+export const EDIT_CARD = 'EDIT_CARD';
 
 export function fetchCards() {
   return (dispatch) => {
@@ -19,8 +20,19 @@ export function fetchCards() {
 }
 
 export function newCard() {
+  return (dispatch) => {
+    dispatch(editCard(null));
+
+    dispatch({
+      type: NEW_CARD
+    });
+  };
+}
+
+export function editCard(card) {
   return {
-    type: NEW_CARD
+    type: EDIT_CARD,
+    card: card
   }
 }
 

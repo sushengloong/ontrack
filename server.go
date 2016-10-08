@@ -22,7 +22,7 @@ type CardJsonData struct {
 	Cards []Card `json:"cards"`
 }
 
-var cards = []Card{ Card{Id: 1, Title: "Develop REST API in golang", Status: "In Progress", Priority: "High", Assignee: "SSL"} }
+var cards = []Card{ Card{Id: 1, Title: "Develop REST API in golang", Status: "Developing", Priority: "High", Assignee: "SSL"} }
 
 func main() {
 	router := mux.NewRouter().StrictSlash(true)

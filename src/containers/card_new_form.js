@@ -69,4 +69,8 @@ CardNewForm = reduxForm({
   form: 'CardNewForm'
 })(CardNewForm);
 
-export default connect(null, { createCard })(CardNewForm);
+function mapStateToProps({ editCard: {card} }) {
+  return { initialValues: card };
+}
+
+export default connect(mapStateToProps, { createCard })(CardNewForm);
