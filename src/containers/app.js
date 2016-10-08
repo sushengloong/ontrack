@@ -14,14 +14,14 @@ class App extends Component {
   render() {
     return (
       <div>
-        <CardNewButton card={this.props.card} showCardForm={this.props.showCardForm} onClickNewCard={this.props.newCard} onClickCloseForm={this.props.cancelNewCard} />
+        <CardNewButton showCardForm={this.props.showCardForm} onClickNewCard={this.props.newCard} onClickCloseForm={this.props.cancelNewCard} />
         <CardTable cards={this.props.cards} editCard={this.props.editCard} />
       </div>
     );
   }
 }
 
-function mapStateToProps({ cards: { cards }, newCard: { showCardForm }, editCard: {card } }) {
+function mapStateToProps({ cards: { cards }, card: { showCardForm, card } }) {
   return { cards, showCardForm, card };
 }
 

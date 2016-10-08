@@ -20,12 +20,8 @@ export function fetchCards() {
 }
 
 export function newCard() {
-  return (dispatch) => {
-    dispatch(editCard(null));
-
-    dispatch({
-      type: NEW_CARD
-    });
+  return {
+    type: NEW_CARD
   };
 }
 
@@ -33,7 +29,7 @@ export function editCard(card) {
   return {
     type: EDIT_CARD,
     card: card
-  }
+  };
 }
 
 export function cancelNewCard() {

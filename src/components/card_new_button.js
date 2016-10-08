@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Glyphicon } from 'react-bootstrap';
-import CardNewForm from '../containers/card_new_form';
+import CardForm from '../containers/card_form';
 
 export default class CardNewButton extends Component {
   render() {
@@ -9,7 +9,7 @@ export default class CardNewButton extends Component {
         <Button bsStyle="primary" bsSize="large" onClick={this.props.onClickNewCard}>
           <Glyphicon glyph="glyphicon-plus" /> Add
         </Button>
-        <CardNewForm {...this.props} />
+        <CardForm {...this.props} />
       </div>
     )
   }
