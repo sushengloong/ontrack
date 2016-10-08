@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, Modal } from 'react-bootstrap';
 import { Field, reduxForm } from 'redux-form';
 import { createCard } from '../actions';
 import { connect } from 'react-redux'; 
@@ -22,7 +22,15 @@ const renderSelect = (field) => {
 }
 
 class CardNewForm extends Component {
-  render() {
+  renderTitle() {
+    return this.props.initialValues ? `Edit Card #${this.props.initialValues.id}` : 'Add New Card';
+  }
+
+  renderSubmitText() {
+    return this.props.initialValues ? 'Update' : 'Create';
+  }
+
+  renderForm() {
     const { handleSubmit, createCard } = this.props;
 
     return (
@@ -59,8 +67,24 @@ class CardNewForm extends Component {
           </Field>
         </div>
 
-        <Button type="submit" bsStyle="primary">Create</Button>
+        <Button type="submit" bsStyle="primary">{this.renderSubmitText()}</Button>
       </form>
+    )
+  }
+
+  render() {
+    return (
+      <Modal show={this.props.showCardForm} onHide={this.props.onClickCloseForm}>
+        <Modal.Header closeButton>
+          <Modal.Title>{this.renderTitle()}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {this.renderForm()}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={this.props.onClickCloseForm}>Close</Button>
+        </Modal.Footer>
+      </Modal>
     )
   }
 }
