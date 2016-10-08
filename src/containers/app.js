@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import CardTable from '../components/card_table';
 import CardNewButton from '../components/card_new_button';
+import CardForm from '../containers/card_form';
 import { fetchCards, newCard, cancelNewCard, editCard } from '../actions';
 
 class App extends Component {
@@ -14,7 +15,8 @@ class App extends Component {
   render() {
     return (
       <div>
-        <CardNewButton showCardForm={this.props.showCardForm} onClickNewCard={this.props.newCard} onClickCloseForm={this.props.cancelNewCard} />
+        <CardNewButton onClickNewCard={this.props.newCard} />
+        <CardForm showCardForm={this.props.showCardForm} onClickCloseForm={this.props.cancelNewCard} />
         <CardTable cards={this.props.cards} editCard={this.props.editCard} />
       </div>
     );
