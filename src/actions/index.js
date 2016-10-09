@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { reset } from 'redux-form'
 
 export const FETCH_CARDS = 'FETCH_CARDS';
 export const NEW_CARD = 'NEW_CARD';
@@ -39,9 +40,14 @@ export function editCard(card) {
 }
 
 export function cancelNewCard() {
-  return {
-    type: CANCEL_NEW_CARD
+  return (dispatch) => {
+    _cancelNewCard(dispatch);
   };
+}
+
+function _cancelNewCard(dispatch) {
+    dispatch({ type: CANCEL_NEW_CARD });
+    dispatch(reset('cardForm'));
 }
 
 export function saveCard(props) {
@@ -60,9 +66,7 @@ export function deleteCard(card) {
 }
 
 export function cancelDeleteCard() {
-  return {
-    type: CANCEL_DELETE_CARD
-  };
+  return { type: CANCEL_DELETE_CARD };
 }
 
 export function confirmDeleteCard(card) {
@@ -93,7 +97,7 @@ function _createCard(props) {
           type: CREATE_CARD,
           card: props
         });
-        dispatch(cancelNewCard());
+        _cancelNewCard(dispatch);
       })
       .catch((error) => console.log(error));
   };
@@ -113,7 +117,7 @@ function _updateCard(props) {
           type: UPDATE_CARD,
           card: props
         });
-        dispatch(cancelNewCard());
+        _cancelNewCard(dispatch);
       })
       .catch((error) => console.log(error));
   };
