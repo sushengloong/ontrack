@@ -7,9 +7,11 @@ export const CREATE_CARD = 'CREATE_CARD';
 export const EDIT_CARD = 'EDIT_CARD';
 export const UPDATE_CARD = 'UPDATE_CARD';
 
+const API_HOST = 'http://localhost:8080/api';
+
 export function fetchCards() {
   return (dispatch) => {
-    axios.get('http://localhost:8080/api/cards')
+    axios.get(`${API_HOST}/cards`)
       .then((response) => {
         dispatch({
           type: FETCH_CARDS,
@@ -55,7 +57,7 @@ function _createCard(props) {
     data.append('priority', props.priority);
     data.append('assignee', props.assignee);
 
-    axios.post('http://localhost:8080/api/cards', data)
+    axios.post(`${API_HOST}/cards`, data)
       .then((response) => {
         dispatch({
           type: CREATE_CARD,
@@ -70,14 +72,12 @@ function _createCard(props) {
 function _updateCard(props) {
   return (dispatch) => {
     const data = new FormData();
-    const { id } = props;
-    data.append('id', id);
     data.append('title', props.title);
     data.append('status', props.status);
     data.append('priority', props.priority);
     data.append('assignee', props.assignee);
 
-    axios.post(`http://localhost:8080/api/cards/${id}`, data)
+    axios.post(`${API_HOST}/cards/${props.id}`, data)
       .then((response) => {
         dispatch({
           type: UPDATE_CARD,
