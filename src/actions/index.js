@@ -7,6 +7,8 @@ export const CREATE_CARD = 'CREATE_CARD';
 export const EDIT_CARD = 'EDIT_CARD';
 export const UPDATE_CARD = 'UPDATE_CARD';
 export const DELETE_CARD = 'DELETE_CARD';
+export const CANCEL_DELETE_CARD = 'CANCEL_DELETE_CARD';
+export const CONFIRM_DELETE_CARD = 'CONFIRM_DELETE_CARD';
 
 const API_HOST = 'http://localhost:8080/api';
 
@@ -55,6 +57,26 @@ export function deleteCard(card) {
     type: DELETE_CARD,
     card: card
   }
+}
+
+export function cancelDeleteCard() {
+  return {
+    type: CANCEL_DELETE_CARD
+  };
+}
+
+export function confirmDeleteCard(card) {
+  return (dispatch) => {
+    axios.delete(`${API_HOST}/cards/${card.id}`)
+      .then((response) => {
+        dispatch({
+          type: CONFIRM_DELETE_CARD,
+          card: card
+        });
+        dispatch(cancelDeleteCard());
+      })
+      .catch((error) => console.log(error));
+  };
 }
 
 function _createCard(props) {

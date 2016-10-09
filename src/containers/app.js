@@ -6,7 +6,7 @@ import CardTable from '../components/card_table';
 import CardNewButton from '../components/card_new_button';
 import ConfirmDeleteModal from '../components/confirm_delete_modal';
 import CardForm from '../containers/card_form';
-import { fetchCards, newCard, cancelNewCard, editCard, deleteCard } from '../actions';
+import { fetchCards, newCard, cancelNewCard, editCard, deleteCard, cancelDeleteCard, confirmDeleteCard } from '../actions';
 
 class App extends Component {
   componentDidMount() {
@@ -19,7 +19,7 @@ class App extends Component {
         <CardNewButton onClickNewCard={this.props.newCard} />
         <CardForm showCardForm={this.props.showCardForm} onClickCloseForm={this.props.cancelNewCard} />
         <CardTable cards={this.props.cards} editCard={this.props.editCard} deleteCard={this.props.deleteCard} />
-        <ConfirmDeleteModal showConfirmDelete={this.props.showConfirmDelete} card={this.props.card} />
+        <ConfirmDeleteModal showConfirmDelete={this.props.showConfirmDelete} card={this.props.card} onClickCloseForm={this.props.cancelDeleteCard} confirmDeleteCard={this.props.confirmDeleteCard} />
       </div>
     );
   }
@@ -30,6 +30,6 @@ function mapStateToProps({ cards: { cards }, card: { showCardForm, showConfirmDe
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ fetchCards, newCard, cancelNewCard, editCard, deleteCard }, dispatch);
+  return bindActionCreators({ fetchCards, newCard, cancelNewCard, editCard, deleteCard, cancelDeleteCard, confirmDeleteCard }, dispatch);
 }
 export default connect(mapStateToProps, mapDispatchToProps)(App);

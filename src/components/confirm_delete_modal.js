@@ -18,8 +18,8 @@ export default class ConfirmDeleteModal extends Component {
           {this.renderMessage()}
         </Modal.Body>
         <Modal.Footer>
-          <Button>No</Button>
-          <Button bsStyle="danger">Yes</Button>
+          <Button onClick={this.props.onClickCloseForm}>No</Button>
+          <Button bsStyle="danger" onClick={(e) => this.props.confirmDeleteCard(this.props.card)}>Yes</Button>
         </Modal.Footer>
       </Modal>
     )

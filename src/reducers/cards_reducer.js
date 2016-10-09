@@ -1,4 +1,4 @@
-import { FETCH_CARDS, CREATE_CARD, UPDATE_CARD } from '../actions'
+import { FETCH_CARDS, CREATE_CARD, UPDATE_CARD, CONFIRM_DELETE_CARD } from '../actions'
 
 export default function(state = { cards: [] }, action) {
   let { cards } = state;
@@ -18,6 +18,8 @@ export default function(state = { cards: [] }, action) {
         return c;
       });
       return { ...state, cards };
+    case CONFIRM_DELETE_CARD:
+      return cards.filter( (c, index) => c.id !== card.id)
     default:
       return state;
   }
