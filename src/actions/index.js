@@ -6,6 +6,7 @@ export const CANCEL_NEW_CARD = 'CANCEL_NEW_CARD';
 export const CREATE_CARD = 'CREATE_CARD';
 export const EDIT_CARD = 'EDIT_CARD';
 export const UPDATE_CARD = 'UPDATE_CARD';
+export const DELETE_CARD = 'DELETE_CARD';
 
 const API_HOST = 'http://localhost:8080/api';
 
@@ -46,6 +47,13 @@ export function saveCard(props) {
     return _updateCard(props);
   } else {
     return _createCard(props);
+  }
+}
+
+export function deleteCard(card) {
+  return {
+    type: DELETE_CARD,
+    card: card
   }
 }
 
