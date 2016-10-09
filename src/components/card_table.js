@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Button, Glyphicon } from 'react-bootstrap';
 
 export default class CardTable extends Component {
   renderCardRow(card) {
@@ -10,6 +11,11 @@ export default class CardTable extends Component {
         <td>{card.status}</td>
         <td>{card.assignee}</td>
         <td>{card.priority}</td>
+        <td>
+          <Button bsSize="small" bsStyle="danger">
+            <Glyphicon glyph="trash" /> Delete
+          </Button>
+        </td>
       </tr>
     );
   }
@@ -24,6 +30,7 @@ export default class CardTable extends Component {
             <th>Status</th>
             <th>Assignee</th>
             <th>Priority</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
