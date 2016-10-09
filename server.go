@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"strconv"
 	"time"
 
 	"github.com/gorilla/mux"
@@ -28,6 +29,7 @@ func main() {
 	router := mux.NewRouter().StrictSlash(true)
 	router.HandleFunc("/cards", index).Methods("GET")
 	router.HandleFunc("/cards", create).Methods("POST")
+	router.HandleFunc("/cards/{id:[0-9]+}", update).Methods("POST")
 
 	server := &http.Server{
 		Handler:      router,
@@ -66,6 +68,45 @@ func create(w http.ResponseWriter, r *http.Request) {
 	assignee := r.FormValue("assignee");
 	card := Card{Id: len(cards)+1, Title: title, Status: status, Priority: priority, Assignee: assignee}
 	cards = append(cards, card)
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+}
+
+func update(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	id, err := strconv.Atoi(vars["id"])
+	if err != nil {
+		log.Println(err.Error())
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	title := r.FormValue("title");
+	status := r.FormValue("status");
+	priority := r.FormValue("priority");
+	assignee := r.FormValue("assignee");
+
+	found := false
+	for i, _ := range cards {
+		c := &cards[i]
+		if c.Id == id {
+			found = true
+			c.Title = title
+			c.Status = status
+			c.Priority = priority
+			c.Assignee = assignee
+			break
+		}
+	}
+
+	if !found {
+		notFoundErr := fmt.Sprintf("Record %d not found", id)
+		log.Println(notFoundErr)
+		http.Error(w, notFoundErr, http.StatusInternalServerError)
+		return
+	}
+	fmt.Printf("%+v", cards);
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
