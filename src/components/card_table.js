@@ -2,6 +2,11 @@ import React, { Component } from 'react';
 import { Button, Glyphicon } from 'react-bootstrap';
 
 export default class CardTable extends Component {
+  onDeleteButtonClick(e) {
+    e.stopPropagation();
+    console.log("DELETE!");
+  }
+
   renderCardRow(card) {
     const id = card.id
     return (
@@ -12,7 +17,7 @@ export default class CardTable extends Component {
         <td>{card.assignee}</td>
         <td>{card.priority}</td>
         <td>
-          <Button bsSize="small" bsStyle="danger">
+          <Button bsSize="small" bsStyle="danger" onClick={this.onDeleteButtonClick}>
             <Glyphicon glyph="trash" /> Delete
           </Button>
         </td>
