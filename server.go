@@ -30,6 +30,7 @@ func main() {
 	router.HandleFunc("/cards", index).Methods("GET")
 	router.HandleFunc("/cards", create).Methods("POST")
 	router.HandleFunc("/cards/{id:[0-9]+}", update).Methods("POST")
+	router.HandleFunc("/cards/{id:[0-9]+}", destroy).Methods("DELETE")
 
 	server := &http.Server{
 		Handler:      router,
@@ -106,7 +107,40 @@ func update(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, notFoundErr, http.StatusInternalServerError)
 		return
 	}
-	fmt.Printf("%+v", cards);
+	fmt.Printf("%+v\n", cards);
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+}
+
+func destroy(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	id, err := strconv.Atoi(vars["id"])
+	if err != nil {
+		log.Println(err.Error())
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	index := -1
+	for i, _ := range cards {
+		c := &cards[i]
+		if c.Id == id {
+			index = i
+			break
+		}
+	}
+
+	if index == -1 {
+		notFoundErr := fmt.Sprintf("Record %d not found", id)
+		log.Println(notFoundErr)
+		http.Error(w, notFoundErr, http.StatusInternalServerError)
+		return
+	}
+
+	cards = append(cards[:index], cards[index+1:]...)
+
+	fmt.Printf("%+v\n", cards);
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
